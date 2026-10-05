@@ -1,0 +1,94 @@
+@model ContosoWeb.Models.SleepAnalysis
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Sleep Tracking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #f2f2f2;
+        }
+
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sleep Tracking Data</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Hours</th>
+                <th>Quality</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var record in Model.Records)
+        {
+            <tr>
+                <td>@record.Date</td>
+                <td>@record.Hours</td>
+                <td>@record.Quality</td>
+                <td>@record.Score.ToString("0.##")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <div class="summary">
+        <h2>Summary</h2>
+
+        <p>
+            <strong>Average Score:</strong>
+            @Model.AverageScore.ToString("0.##")
+        </p>
+
+        @if (Model.BestNight != null)
+        {
+            <p>
+                <strong>Best Night:</strong>
+                @Model.BestNight.Date
+                -
+                @Model.BestNight.Score.ToString("0.##")
+            </p>
+        }
+
+        @if (Model.WorstNight != null)
+        {
+            <p>
+                <strong>Worst Night:</strong>
+                @Model.WorstNight.Date
+                -
+                @Model.WorstNight.Score.ToString("0.##")
+            </p>
+        }
+    </div>
+
+</body>
+</html>
